@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "91775078-de55-44e7-83e4-10c3905f044b",
+		"name": "test cases",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18822657"
+	},
+	"item": [
+		{
+			"name": "announcement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Check data value of the response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData['message'][0].title).to.eql('new title');\r",
+							"    pm.expect(jsonData['message'][0].description).to.eql('new descr');\r",
+							"    pm.expect(jsonData['message'][0].uid).to.eql('528810ca-3547-47e4-9c47-a212e5ee07c2');\r",
+							"    pm.expect(jsonData['message'][0].date).to.eql('today');\r",
+							"});\r",
+							"pm.test(\"Test data type of the response\", () => {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData['message']).to.be.an(\"array\");\r",
+							"    pm.expect(jsonData['message'][0].title).to.be.an(\"string\");\r",
+							"    pm.expect(jsonData['message'][0].title).to.be.an(\"string\");\r",
+							"    pm.expect(jsonData['message'][0].description).to.be.an(\"string\");\r",
+							"    pm.expect(jsonData['message'][0].date).to.be.an(\"string\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://a1iqkxvjeb.execute-api.eu-north-1.amazonaws.com/Test/announcement",
+					"protocol": "https",
+					"host": [
+						"a1iqkxvjeb",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Test",
+						"announcement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "announcement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Check data value of the response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData['ResponseMetadata'].HTTPStatusCode).to.eql(200);\r",
+							"    pm.expect(jsonData['ResponseMetadata'][\"HTTPHeaders\"].server).to.eql('Server');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"new 3\", \r\n\"description\": \"new description 2\",\r\n\"date\": \"2022-07-18\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://a1iqkxvjeb.execute-api.eu-north-1.amazonaws.com/Test/announcement",
+					"protocol": "https",
+					"host": [
+						"a1iqkxvjeb",
+						"execute-api",
+						"eu-north-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Test",
+						"announcement"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

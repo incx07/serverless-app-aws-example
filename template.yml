@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  announcement
+
+  Sample SAM Template for announcement
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    Tracing: Active
+  Api:
+    TracingEnabled: True
+
+Resources:
+  AnnouncementTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Announcement
+        AttributeDefinitions:
+          - AttributeName: uid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+  AnnouncementHttpApi:
+      Type: AWS::Serverless::HttpApi
+      Properties:
+        StageName: Test
+        CorsConfiguration: True
+  PostMessageFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+          Handler: announcement.app.post_announcement.lambda_handler
+          Runtime: python3.7
+          MemorySize: 128
+          Timeout: 5
+          Events:
+            PostMessage:
+              Type: HttpApi
+              Properties:
+                ApiId: !Ref AnnouncementHttpApi
+                Method: POST
+                Path: /announcement
+          Policies:
+            - AmazonDynamoDBFullAccess
+  GetMessagesFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        Handler: announcement.app.get_announcement.lambda_handler
+        Runtime: python3.7
+        MemorySize: 128
+        Timeout: 5
+        Events:
+          GetMessages:
+            Type: HttpApi
+            Properties:
+              ApiId: !Ref AnnouncementHttpApi
+              Method: GET
+              Path: /announcement
+        Policies:
+          - AmazonDynamoDBFullAccess

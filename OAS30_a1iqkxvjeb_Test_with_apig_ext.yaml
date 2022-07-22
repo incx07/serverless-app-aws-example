@@ -1,0 +1,46 @@
+openapi: "3.0.1"
+info:
+  title: "announcement"
+  version: "1.0"
+servers:
+- url: "https://a1iqkxvjeb.execute-api.eu-north-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: "Test"
+tags:
+- name: "aws:cloudformation:stack-name"
+  x-amazon-apigateway-tag-value: "announcement"
+- name: "aws:cloudformation:logical-id"
+  x-amazon-apigateway-tag-value: "AnnouncementHttpApi"
+- name: "aws:cloudformation:stack-id"
+  x-amazon-apigateway-tag-value: "arn:aws:cloudformation:eu-north-1:287966179798:stack/announcement/3f431760-0436-11ed-93d9-0ab694a123fc"
+- name: "httpapi:createdBy"
+  x-amazon-apigateway-tag-value: "SAM"
+paths:
+  /announcement:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /announcement"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-north-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-north-1:287966179798:function:announcement-GetMessagesFunction-YvzzgDgA6pXB/invocations"
+        connectionType: "INTERNET"
+    post:
+      responses:
+        default:
+          description: "Default response for POST /announcement"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-north-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-north-1:287966179798:function:announcement-PostMessageFunction-cSP3Yk3bdTud/invocations"
+        connectionType: "INTERNET"
+x-amazon-apigateway-cors:
+  maxAge: -42
+  allowCredentials: false
+  allowOrigins:
+  - "*"
+x-amazon-apigateway-importexport-version: "1.0"
